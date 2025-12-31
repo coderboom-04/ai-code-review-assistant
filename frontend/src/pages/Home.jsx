@@ -1,0 +1,76 @@
+import { useState } from "react";
+import ChatBox from "../components/ChatBox";
+import CodeInput from "../components/CodeInput";
+import Summary from "../components/Summary";
+import { analyzeCodeText } from "../api";
+
+export default function Home() {
+  const [messages, setMessages] = useState([]);
+  const [summary, setSummary] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSend(code) {
+    // show user message
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "user",
+        text: code,
+      },
+    ]);
+
+    setLoading(true);
+
+    try {
+      const response = await analyzeCodeText(code);
+
+      setSummary(response.summary);
+
+      if (response.results.length === 0) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "ai",
+            text: "✅ No security or logic issues detected in your code.",
+            severity: "LOW",
+          },
+        ]);
+      } else {
+        response.results.forEach((item) => {
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "ai",
+              text: item.ai_explanation,
+              severity: item.issue.severity,
+              rule: item.issue.rule_id,
+            },
+          ]);
+        });
+      }
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "ai",
+          text: "❌ Failed to analyze code. Backend error.",
+          severity: "CRITICAL",
+        },
+      ]);
+    }
+
+    setLoading(false);
+  }
+
+  return (
+    <div className="container">
+      <div className="header">🤖 AI Code Review Assistant</div>
+
+      <Summary summary={summary} />
+
+      <ChatBox messages={messages} loading={loading} />
+
+      <CodeInput onSend={handleSend} />
+    </div>
+  );
+}

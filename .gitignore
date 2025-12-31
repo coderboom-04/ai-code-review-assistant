@@ -1,0 +1,16 @@
+# Environment variables (SECRETS)
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.venv/
+
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store

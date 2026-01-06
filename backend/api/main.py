@@ -50,16 +50,4 @@ async def analyze_text(data: CodeInput):
         "results": results
     }
 
-@app.post("/analyze")
-async def analyze(file: UploadFile = File(...)):
-    code = (await file.read()).decode("utf-8")
-    issues = analyze_code(code)
 
-    results = []
-    for issue in issues:
-        results.append({
-            "issue": issue.to_dict(),
-            "ai_explanation": ai_explain_issue(issue, code)
-        })
-
-    return {"results": results}

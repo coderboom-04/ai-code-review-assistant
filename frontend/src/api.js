@@ -1,6 +1,6 @@
 export async function analyzeCodeText(code) {
   const response = await fetch(
-    "https://ai-code-review-backend.onrender.com/analyze-text",
+    "https://<your-backend-name>.onrender.com/analyze-text",
     {
       method: "POST",
       headers: {

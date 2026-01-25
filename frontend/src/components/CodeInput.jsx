@@ -4,24 +4,22 @@ export default function CodeInput({ onSend }) {
   const [code, setCode] = useState("");
 
   return (
-    <div className="uploader">
+    <div className="code-input">
       <textarea
-        rows="8"
-        placeholder="Paste your Python code here..."
         value={code}
         onChange={(e) => setCode(e.target.value)}
-        style={{
-          width: "100%",
-          resize: "none",
-          padding: "10px",
-          borderRadius: "8px"
-        }}
+        placeholder="Paste your Python code here..."
       />
+
       <button
-        onClick={() => onSend(code)}
-        disabled={!code.trim()}
+        onClick={() => {
+          if (code.trim() !== "") {
+            onSend(code);
+            setCode(""); // optional: clear after send
+          }
+        }}
       >
-        Send
+        Analyze
       </button>
     </div>
   );

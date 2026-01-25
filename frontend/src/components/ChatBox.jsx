@@ -1,12 +1,13 @@
-export default function ChatBox({ code, setCode, onSend }) {
+export default function ChatBox({ messages, loading }) {
   return (
-    <div className="chatbox-fixed">
-      <textarea
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-        placeholder="Paste your Python code here..."
-      />
-      <button onClick={onSend}>Analyze</button>
+    <div className="chatbox">
+      {messages.map((msg, index) => (
+        <div key={index} className={`message ${msg.role}`}>
+          <p>{msg.text}</p>
+        </div>
+      ))}
+
+      {loading && <p>🤖 Analyzing your code...</p>}
     </div>
   );
 }

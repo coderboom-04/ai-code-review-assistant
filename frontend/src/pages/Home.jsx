@@ -10,6 +10,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   async function handleSend(code) {
+    console.log("SEND CLICKED",code);
     setMessages((prev) => [
       ...prev,
       { role: "user", text: code },

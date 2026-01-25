@@ -9,16 +9,10 @@ export default function CodeInput({ onSend }) {
         value={code}
         onChange={(e) => setCode(e.target.value)}
         placeholder="Paste your Python code here..."
+        rows={5}
       />
 
-      <button
-        onClick={() => {
-          if (code.trim() !== "") {
-            onSend(code);
-            setCode(""); // optional: clear after send
-          }
-        }}
-      >
+      <button onClick={() => onSend(code)}>
         Analyze
       </button>
     </div>

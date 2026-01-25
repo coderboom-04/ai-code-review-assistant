@@ -59,7 +59,8 @@ export default function Home() {
   }
 
   return (
-    <div className="page">
+  <div className="page">
+    <div className="app-container">
       {/* FIXED INPUT AREA */}
       <div className="fixed-top">
         <div className="header">🤖 AI Code Review Assistant</div>
@@ -72,5 +73,6 @@ export default function Home() {
         <ChatBox messages={messages} loading={loading} />
       </div>
     </div>
+  </div>
   );
 }

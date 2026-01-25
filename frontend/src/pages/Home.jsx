@@ -10,20 +10,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   async function handleSend(code) {
-    // show user message
     setMessages((prev) => [
       ...prev,
-      {
-        role: "user",
-        text: code,
-      },
+      { role: "user", text: code },
     ]);
 
     setLoading(true);
 
     try {
       const response = await analyzeCodeText(code);
-
       setSummary(response.summary);
 
       if (response.results.length === 0) {
@@ -63,14 +58,18 @@ export default function Home() {
   }
 
   return (
-    <div className="container">
-      <div className="header">🤖 AI Code Review Assistant</div>
+    <div className="page">
+      {/* FIXED INPUT AREA */}
+      <div className="fixed-top">
+        <div className="header">🤖 AI Code Review Assistant</div>
+        <CodeInput onSend={handleSend} />
+        <Summary summary={summary} />
+      </div>
 
-      <Summary summary={summary} />
-
-      <ChatBox messages={messages} loading={loading} />
-
-      <CodeInput onSend={handleSend} />
+      {/* SCROLLABLE CHAT AREA */}
+      <div className="chat-scroll">
+        <ChatBox messages={messages} loading={loading} />
+      </div>
     </div>
   );
 }

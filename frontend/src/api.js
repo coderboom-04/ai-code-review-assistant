@@ -10,6 +10,8 @@ export async function analyzeCodeText(code) {
   });
 
   if (!response.ok) {
+    const text = await response.text();
+    console.error("Backend response:", text);
     throw new Error("Backend error");
   }
 
